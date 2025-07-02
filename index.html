@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESTÃO DE ESCALA FONT OFFICE</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>GESTÃO DE ESCALA FONT OFFICE</h1>
+        </div>
+
+        <!-- Rodapé Global -->
+        <div id="rodape-global" class="rodape-global">
+            <span id="rodape-texto">© 2025 Font Office</span>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+            <button class="tab-btn" data-tab="controle-pausas">Controle de Pausas</button>
+            <button class="tab-btn" data-tab="cronograma-pausas">Cronograma de Pausas</button>
+            <button class="tab-btn" data-tab="lista-presenca">Lista de Presença</button>
+            <button class="tab-btn" data-tab="escala-atual">Escala Atual</button>
+            <button class="tab-btn" data-tab="configuracoes">Configurações</button>
+            <button class="tab-btn" data-tab="relatorios">Relatórios</button>
+        </div>
+
+        <!-- Tab Contents -->
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <h2>Dashboard Operacional</h2>
+            
+            <!-- Top Widgets -->
+            <div class="widgets-top">
+                <div class="widget">
+                    <h3>Funcionários Online</h3>
+                    <div class="widget-value" id="funcionarios-online">0</div>
+                </div>
+                <div class="widget">
+                    <h3>Cobertura Atual</h3>
+                    <div class="widget-value" id="cobertura-atual">0%</div>
+                </div>
+                <div class="widget">
+                    <h3>Pausas Ativas</h3>
+                    <div class="widget-value" id="pausas-ativas">0</div>
+                </div>
+                <div class="widget">
+                    <h3>Total de Funcionários</h3>
+                    <div class="widget-value" id="total-funcionarios">0</div>
+                </div>
+            </div>
+
+            <!-- Middle Section: Chart + Status -->
+            <div class="widgets-middle">
+                <div class="chart-container">
+                    <h3>Cobertura por Horário (9h-20h)</h3>
+                    <canvas id="coberturaChart"></canvas>
+                </div>
+                <div class="status-turnos">
+                    <h3>Status dos Turnos</h3>
+                    <div class="turno-info">
+                        <div class="turno-item">
+                            <span class="turno-label">9h-18h</span>
+                            <span class="turno-count" id="turno-9-18">0</span>
+                        </div>
+                        <div class="turno-item">
+                            <span class="turno-label">11h-20h</span>
+                            <span class="turno-count" id="turno-11-20">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Widgets -->
+            <div class="widgets-bottom">
+                <div class="alertas">
+                    <h3>Alertas</h3>
+                    <div class="alert-list">
+                        <div class="alert-item">Sistema operando normalmente</div>
+                        <div class="alert-item">Cobertura adequada em todos os turnos</div>
+                        <div class="alert-item">Pausas sendo monitoradas automaticamente</div>
+                    </div>
+                </div>
+                <div class="resumo-pausas">
+                    <h3>Resumo de Pausas</h3>
+                    <div class="pausa-summary">
+                        <div class="pausa-item">
+                            <span>Manhã</span>
+                            <span id="pausas-manha">0</span>
+                        </div>
+                        <div class="pausa-item">
+                            <span>Almoço</span>
+                            <span id="pausas-almoco">0</span>
+                        </div>
+                        <div class="pausa-item">
+                            <span>Tarde</span>
+                            <span id="pausas-tarde">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Last Update -->
+            <div class="last-update">
+                Última atualização: <span id="last-update-time">--:--:--</span>
+            </div>
+        </div>
+
+        <!-- Controle de Pausas Tab -->
+        <div id="controle-pausas" class="tab-content">
+            <h2>Controle de Pausas</h2>
+            
+            <div class="funcionarios-list" id="funcionarios-list">
+                <!-- Funcionários serão carregados dinamicamente -->
+            </div>
+
+            <div class="status-pausas">
+                <h3>Status das Pausas</h3>
+                <div class="legenda">
+                    <div class="legenda-item realizada">Pausa Realizada</div>
+                    <div class="legenda-item pendente">Pausa Pendente</div>
+                </div>
+                <div class="pausas-status" id="pausas-status">
+                    <!-- Status será carregado dinamicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Cronograma de Pausas Tab -->
+        <div id="cronograma-pausas" class="tab-content">
+            <h2>Cronograma de Pausas</h2>
+            
+            <div class="timeline-container">
+                <div class="timeline-header">
+                    <div class="time-slot">11:00</div>
+                    <div class="time-slot">12:00</div>
+                    <div class="time-slot">13:00</div>
+                    <div class="time-slot">14:00</div>
+                    <div class="time-slot">15:00</div>
+                    <div class="time-slot">16:00</div>
+                    <div class="time-slot">17:00</div>
+                    <div class="time-slot">18:00</div>
+                </div>
+                <div class="timeline-content" id="timeline-content">
+                    <!-- Timeline será carregada dinamicamente -->
+                </div>
+            </div>
+
+            <div class="cobertura-visual">
+                <h3>Cobertura Visual</h3>
+                <div class="cobertura-bar"></div>
+                <p>Visualização em tempo real da cobertura operacional</p>
+            </div>
+        </div>
+
+        <!-- Lista de Presença Tab -->
+        <div id="lista-presenca" class="tab-content">
+            <h2>Lista de Presença</h2>
+            <div class="presenca-counter">
+                <span id="presenca-counter">Presentes: 0 | Ausentes: 0</span>
+            </div>
+            
+            <div class="presenca-container">
+                <div class="turno-section">
+                    <h3>Turno 9h-18h</h3>
+                    <div class="funcionarios-presenca" id="presenca-9-18">
+                        <!-- Funcionários serão carregados dinamicamente -->
+                    </div>
+                </div>
+                <div class="turno-section">
+                    <h3>Turno 11h-20h</h3>
+                    <div class="funcionarios-presenca" id="presenca-11-20">
+                        <!-- Funcionários serão carregados dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Escala Atual Tab -->
+        <div id="escala-atual" class="tab-content">
+            <h2>Escala Atual</h2>
+            
+            <div class="escala-table">
+                <table>
+                    <thead>
+  <tr>
+    <th>Nome</th>
+    <th>Status</th>
+  </tr>
+</thead>
+
+                    <tbody id="escala-tbody">
+                        <!-- Tabela será carregada dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Configurações Tab -->
+        <div id="configuracoes" class="tab-content">
+            <h2>Configurações</h2>
+            
+            <div class="config-sections">
+                <div class="config-section">
+                    <h3>PERSONALIZAÇÃO</h3>
+                    <div class="form-group">
+                        <label class="form-label" for="nome-empresa">Nome da Empresa</label>
+                        <input type="text" id="nome-empresa" class="form-control" value="Font Office" placeholder="Digite o nome da empresa">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="texto-rodape">Texto de Rodapé</label>
+                        <input type="text" id="texto-rodape" class="form-control" value="© 2025 Font Office" placeholder="Digite o texto do rodapé">
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3>GESTÃO DE FUNCIONÁRIOS</h3>
+                    <div class="form-group">
+                        <label class="form-label" for="novo-nome">Nome do Funcionário</label>
+                        <input type="text" id="novo-nome" class="form-control" placeholder="Digite o nome">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="horario-entrada">Horário de Entrada</label>
+                        <select id="horario-entrada" class="form-control">
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="horario-saida">Horário de Saída</label>
+                        <select id="horario-saida" class="form-control">
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                        </select>
+                    </div>
+                    <div class="form-group flex gap-8">
+                        <button id="adicionar-funcionario" class="btn btn--primary">Adicionar Funcionário</button>
+                        <button id="remover-funcionario" class="btn btn--secondary">Remover Funcionário</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="funcionarios-cadastrados mt-24">
+                <h3>Funcionários Cadastrados</h3>
+                <div class="card">
+                    <div class="card__body">
+                        <div id="lista-funcionarios-cadastrados">
+                            <!-- Lista será carregada dinamicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relatórios Tab -->
+        <div id="relatorios" class="tab-content">
+            <h2>Relatórios</h2>
+            
+            <div class="relatorios-widgets">
+                <div class="relatorio-chart">
+                    <h3>Cobertura por Horário (9h-20h)</h3>
+                    <canvas id="coberturaRelatorioChart"></canvas>
+                </div>
+                <div class="relatorio-chart">
+                    <h3>Distribuição de Funcionários</h3>
+                    <canvas id="distribuicaoChart"></canvas>
+                </div>
+            </div>
+
+            <div class="estatisticas-gerais">
+                <h3>Estatísticas Gerais</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Total de Funcionários</span>
+                        <span class="stat-value" id="stat-total">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Turno 9h-18h</span>
+                        <span class="stat-value" id="stat-9-18">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Turno 11h-20h</span>
+                        <span class="stat-value" id="stat-11-20">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Presentes Hoje</span>
+                        <span class="stat-value" id="stat-presentes">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Em Pausa Agora</span>
+                        <span class="stat-value" id="stat-pausa-agora">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Cobertura Total</span>
+                        <span class="stat-value" id="stat-cobertura">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Time Editing -->
+    <div id="time-editor-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Horário</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="time-select">Novo Horário</label>
+                    <select id="time-select" class="form-control">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-time-edit" class="btn btn--secondary">Cancelar</button>
+                <button id="confirm-time-edit" class="btn btn--primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Remove Employee -->
+    <div id="remove-employee-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Remover Funcionário</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="funcionario-select">Selecione o Funcionário</label>
+                    <select id="funcionario-select" class="form-control">
+                        <option value="">Selecione um funcionário</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-remove" class="btn btn--secondary">Cancelar</button>
+                <button id="confirm-remove" class="btn btn--primary">Remover</button>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Seu app.js como módulo -->
+<script type="module" src="app.js"></script>
+
+
+</body>
+</html>
